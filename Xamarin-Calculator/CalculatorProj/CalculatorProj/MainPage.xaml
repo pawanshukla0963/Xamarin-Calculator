@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:CalculatorProj.ViewModels"
+             x:Class="CalculatorProj.MainPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="numberButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#5498a9" />
+                <Setter Property="TextColor" Value="#d9d8da" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="FontSize" Value="40" />
+            </Style>
+            <Style x:Key="operationButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#665f62" />
+                <Setter Property="TextColor" Value="#d9d8da" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="FontSize" Value="40" />
+            </Style>
+            <Style x:Key="orangeButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F03829" />
+                <Setter Property="TextColor" Value="#d9d8da" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="FontSize" Value="40" />
+            </Style>
+            <Style x:Key="convertLabel" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="#645045" />
+                <Setter Property="TextColor" Value="#d9d8da" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="HorizontalTextAlignment" Value="End"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand"  x:Name="controlGrid" RowSpacing="1" ColumnSpacing="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Row ="0" Grid.ColumnSpan="4" Spacing="0"  >
+                <Label Text="{Binding CurrentInput}" HorizontalTextAlignment="End" VerticalTextAlignment="End" TextColor="White" FontSize="30" BackgroundColor="#d9d8da" />
+                <Label Text="{Binding ResultString}"  HorizontalTextAlignment="End" VerticalTextAlignment="End" TextColor="White" FontSize="60" BackgroundColor="#d9d8da" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Style="convertLayout" BackgroundColor="#645045" >
+                <Picker FontSize="Large"  VerticalOptions="Center" Grid.Column="0" Title="Currrency" ItemsSource="{Binding Currencies}"  ItemDisplayBinding="{Binding Symbol}" SelectedIndexChanged="Picker_SelectedIndexChangedBase"  />
+                <Label  Grid.Column="1" Text="{Binding ResultString}" Style="{StaticResource convertLabel}"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="convertLayout" BackgroundColor="#645045" >
+                <Picker FontSize="Large"  VerticalOptions="Center" Grid.Column="0" Title="Currrency" ItemsSource="{Binding Currencies}" ItemDisplayBinding="{Binding Symbol}" SelectedIndexChanged="Picker_SelectedIndexChangedTarget" />
+                <Label Grid.Column="1" Text="{Binding TargetCurrencyString}" Style="{StaticResource convertLabel}"></Label>
+            </StackLayout>
+            <Button Command="{Binding ClearButtonCommand}" Text="C" Grid.Row="2" Grid.Column="0" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding EraseButtonCommand}" Text="&#x232B;" Grid.Row="2" Grid.Column="1" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding OpButtonCommand}" CommandParameter="{x:Static viewModels:OperationType.Div}"  Text="&#x00F7;" Grid.Row="2" Grid.Column="2" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding OpButtonCommand}" CommandParameter="{x:Static viewModels:OperationType.Multi}" Text="X" Grid.Row="2" Grid.Column="3" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="7" Text="7" Grid.Row="3" Grid.Column="0" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="8" Text="8" Grid.Row="3" Grid.Column="1" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="9" Text="9" Grid.Row="3" Grid.Column="2" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding OpButtonCommand}" CommandParameter="{x:Static viewModels:OperationType.Sub}"  Text="-" Grid.Row="3" Grid.Column="3" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="4" Text="4" Grid.Row="4" Grid.Column="0" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="5" Text="5" Grid.Row="4" Grid.Column="1" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="6" Text="6" Grid.Row="4" Grid.Column="2" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding OpButtonCommand}" CommandParameter="{x:Static viewModels:OperationType.Add}" Text="+" Grid.Row="4" Grid.Column="3" Style="{StaticResource operationButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="1" Text="1" Grid.Row="5" Grid.Column="0" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="2" Text="2" Grid.Row="5" Grid.Column="1" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="3" Text="3" Grid.Row="5" Grid.Column="2" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding NumButtonCommand}" CommandParameter="0" Text="0" Grid.ColumnSpan="2" Grid.Row="6" Grid.Column="0" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding DotButtonCommand}" Text="." Grid.Row="6" Grid.Column="2" Style="{StaticResource numberButton}" />
+            <Button Command="{Binding EqualsButtonCommand}" Text="=" Grid.RowSpan="2" Grid.Row="5" Grid.Column="3" Style="{StaticResource orangeButton}" />
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>
